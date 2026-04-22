@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-cloud bg-glow font-sans text-ink antialiased;
+    margin: 0;
+  }
+
+  ::selection {
+    background: rgba(47, 163, 160, 0.2);
+  }
+}
+
+@layer components {
+  .surface-card {
+    @apply rounded-[28px] border border-white/70 bg-white/85 shadow-card backdrop-blur-xl;
+  }
+
+  .surface-soft {
+    @apply rounded-3xl border border-white/60 bg-white/70 shadow-card backdrop-blur-md;
+  }
+
+  .input-shell {
+    @apply w-full rounded-2xl border border-mist/80 bg-white px-4 py-3 text-sm text-ink outline-none transition focus:border-tide focus:ring-4 focus:ring-tide/10;
+  }
+
+  .label-text {
+    @apply mb-2 block text-sm font-semibold text-slate;
+  }
+
+  .page-title {
+    @apply font-display text-3xl font-semibold tracking-tight text-ink md:text-[2.3rem];
+  }
+
+  .subtle-text {
+    @apply text-sm leading-6 text-slate;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(216, 228, 234, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(69, 96, 111, 0.25);
+  border-radius: 9999px;
+}
+

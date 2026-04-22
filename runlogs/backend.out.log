@@ -1,0 +1,190 @@
+
+> ngo-vms-backend@1.0.0 dev
+> nodemon server.js
+
+[33m[nodemon] 3.1.14[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[0mGET /api/health [32m200[0m 5.359 ms - 67[0m
+[0mGET /api [33m404[0m 4.245 ms - 1179[0m
+[0mGET /api [33m404[0m 1.275 ms - 1179[0m
+[0mGET /api [33m404[0m 0.537 ms - 1179[0m
+[0mGET /favicon.ico [33m404[0m 0.519 ms - 1205[0m
+[0mGET /favicon.ico [33m404[0m 0.507 ms - 1205[0m
+[0mPOST /api/auth/login [32m200[0m 209.557 ms - 589[0m
+[0mGET /api/dashboard/stats [32m200[0m 530.558 ms - 1697[0m
+[0mGET /api/dashboard/stats [36m304[0m 60.792 ms - -[0m
+[0mGET /api/volunteers?q=&availability=&skill= [32m200[0m 14.519 ms - 1590[0m
+[0mGET /api/volunteers?q=&availability=&skill= [36m304[0m 14.482 ms - -[0m
+[0mGET /api/volunteers [32m200[0m 17.622 ms - 1590[0m
+[0mGET /api/events [32m200[0m 34.511 ms - 1674[0m
+[0mGET /api/volunteers [36m304[0m 17.747 ms - -[0m
+[0mGET /api/events [36m304[0m 23.362 ms - -[0m
+[0mPOST /api/events [32m201[0m 93.084 ms - 402[0m
+[0mGET /api/volunteers [36m304[0m 23.859 ms - -[0m
+[0mGET /api/events [32m200[0m 33.381 ms - 2077[0m
+[0mGET /api/applications [32m200[0m 88.263 ms - 2453[0m
+[0mGET /api/applications [36m304[0m 28.261 ms - -[0m
+[0mPUT /api/applications/69e87d9834f735027684d1a4 [32m200[0m 35.957 ms - 495[0m
+[0mGET /api/applications [32m200[0m 16.237 ms - 2454[0m
+[0mGET /api/profile [32m200[0m 11.136 ms - 447[0m
+[0mGET /api/profile [36m304[0m 11.458 ms - -[0m
+[0mPUT /api/profile [32m200[0m 25.036 ms - 447[0m
+[0mGET /api/dashboard/stats [32m200[0m 37.517 ms - 1698[0m
+[0mGET /api/dashboard/stats [36m304[0m 27.545 ms - -[0m
+[0mPOST /api/auth/register [32m201[0m 153.096 ms - 351[0m
+[0mGET /api/dashboard/stats [32m200[0m 24.147 ms - 856[0m
+[0mGET /api/dashboard/stats [36m304[0m 28.001 ms - -[0m
+[0mGET /api/applications [32m200[0m 19.257 ms - 2[0m
+[0mGET /api/events [32m200[0m 26.308 ms - 2263[0m
+[0mGET /api/applications [36m304[0m 20.139 ms - -[0m
+[0mGET /api/events [36m304[0m 31.273 ms - -[0m
+[0mPOST /api/apply [32m201[0m 24.508 ms - 391[0m
+[0mGET /api/events [36m304[0m 28.701 ms - -[0m
+[0mGET /api/applications [32m200[0m 34.840 ms - 393[0m
+[0mGET /api/dashboard/stats [32m200[0m 61.394 ms - 856[0m
+[0mGET /api/dashboard/stats [36m304[0m 73.977 ms - -[0m
+[0mPOST /api/auth/login [32m200[0m 195.460 ms - 589[0m
+[0mGET /api/dashboard/stats [32m200[0m 41.471 ms - 1602[0m
+[0mGET /api/dashboard/stats [36m304[0m 26.544 ms - -[0m
+[0mGET /api/volunteers?q=&availability=&skill= [32m200[0m 11.848 ms - 1908[0m
+[0mGET /api/volunteers?q=&availability=&skill= [36m304[0m 11.469 ms - -[0m
+[0mGET /api/applications [32m200[0m 15.863 ms - 2846[0m
+[0mGET /api/applications [36m304[0m 25.583 ms - -[0m
+[0mGET /api/profile [32m200[0m 10.778 ms - 447[0m
+[0mGET /api/profile [36m304[0m 14.219 ms - -[0m
+[0mGET /api/profile [36m304[0m 9.509 ms - -[0m
+[0mGET /api/profile [36m304[0m 7.841 ms - -[0m
+[0mGET /api/profile [36m304[0m 8.188 ms - -[0m
+[0mGET /api/profile [36m304[0m 9.911 ms - -[0m
+[0mGET /api/volunteers?q=&availability=&skill= [36m304[0m 13.135 ms - -[0m
+[0mGET /api/volunteers?q=&availability=&skill= [36m304[0m 11.393 ms - -[0m
+[0mGET /api/dashboard/stats [36m304[0m 21.517 ms - -[0m
+[0mGET /api/dashboard/stats [36m304[0m 23.783 ms - -[0m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+MongoDB connected: 127.0.0.1
+Server listening on port 5000
+[0mGET /api/health [32m200[0m 4.702 ms - 67[0m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m

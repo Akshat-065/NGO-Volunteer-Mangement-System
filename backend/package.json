@@ -1,0 +1,31 @@
+{
+  "name": "ngo-vms-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/seed.js",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.11.0",
+    "morgan": "^1.10.0",
+    "multer": "^2.1.1",
+    "socket.io": "^4.8.3",
+    "winston": "^3.18.3",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "jest": "^30.3.0",
+    "nodemon": "^3.1.10"
+  }
+}
