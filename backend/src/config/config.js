@@ -26,7 +26,13 @@ const formatZodIssues = (issues) =>
     .map((issue) => `${issue.path.join(".") || "env"}: ${issue.message}`)
     .join(", ");
 
+let cachedConfig = null;
+
 export const getConfig = () => {
+  if (cachedConfig) {
+    return cachedConfig;
+  }
+
   const parsed = envSchema.safeParse(process.env);
   if (!parsed.success) {
     throw new Error(`Invalid environment variables: ${formatZodIssues(parsed.error.issues)}`);
@@ -35,7 +41,7 @@ export const getConfig = () => {
   const env = parsed.data.NODE_ENV;
   const isProduction = env === "production";
 
-  return {
+  cachedConfig = {
     env,
     isProduction,
     port: parsed.data.PORT,
@@ -63,4 +69,6 @@ export const getConfig = () => {
       max: parsed.data.AUTH_RATE_LIMIT_MAX
     }
   };
+
+  return cachedConfig;
 };

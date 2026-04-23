@@ -12,7 +12,9 @@ const getSocketBaseUrl = () => {
 let socket = null;
 
 const logSocketEvent = (label, payload) => {
-  console.log(`[socket] ${label}`, payload);
+  if (appConfig.isDev) {
+    console.log(`[socket] ${label}`, payload);
+  }
 };
 
 const createSocket = () => {

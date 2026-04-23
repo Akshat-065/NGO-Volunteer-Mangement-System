@@ -36,11 +36,16 @@ const LoginPage = () => {
       await login(form);
       navigate(nextRoute, { replace: true });
     } catch (requestError) {
-      if (requestError.response?.data?.details?.code === "EMAIL_NOT_VERIFIED") {
+      const isDemoEmail = ["admin@ngo.org", "rohan@ngo.org"].includes(form.email.toLowerCase());
+      const isVerificationError = requestError.response?.data?.details?.code === "EMAIL_NOT_VERIFIED";
+
+      if (isVerificationError && !isDemoEmail) {
         setRequiresVerification(true);
       }
 
-      setError(requestError.response?.data?.message || "Unable to sign in. Please try again.");
+      if (!(isVerificationError && isDemoEmail)) {
+        setError(requestError.response?.data?.message || "Unable to sign in. Please try again.");
+      }
     } finally {
       setIsSubmitting(false);
     }

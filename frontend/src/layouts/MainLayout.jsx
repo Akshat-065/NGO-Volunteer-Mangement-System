@@ -10,11 +10,15 @@ const MainLayout = () => {
   useEffect(() => {
     const socket = connectSocket();
     const unsubscribe = subscribeToNotifications((eventName, payload) => {
-      console.log(`[socket] notification event: ${eventName}`, payload);
+      if (import.meta.env.DEV) {
+        console.log(`[socket] notification event: ${eventName}`, payload);
+      }
     });
 
     socket.on("connect_error", (error) => {
-      console.log("[socket] connect_error", error.message);
+      if (import.meta.env.DEV) {
+        console.log("[socket] connect_error", error.message);
+      }
     });
 
     return () => {

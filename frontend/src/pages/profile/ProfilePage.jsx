@@ -1,5 +1,5 @@
 import { Mail, Save } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormField from "../../components/forms/FormField";
 import ProfileImageUpload from "../../components/forms/ProfileImageUpload";
 import Button from "../../components/ui/Button";
@@ -41,8 +41,12 @@ const ProfilePage = () => {
   const [verificationError, setVerificationError] = useState("");
 
   const profileQuery = useApiQuery(getProfile, [], {
-    initialData: null,
-    onSuccess: (data) => {
+    initialData: null
+  });
+
+  useEffect(() => {
+    if (profileQuery.data && !form) {
+      const data = profileQuery.data;
       setForm({
         name: data.user.name || "",
         email: data.user.email || "",
@@ -55,7 +59,7 @@ const ProfilePage = () => {
         availability: data.volunteer?.availability || "Flexible"
       });
     }
-  });
+  }, [profileQuery.data, form]);
 
   const updateMutation = useApiMutation(updateProfile, {
     onSuccess: (data) => {
@@ -144,7 +148,7 @@ const ProfilePage = () => {
     await updateMutation.mutate(payload);
   };
 
-  if (loading) {
+  if (loading || (profile && !form)) {
     return <LoadingSpinner label="Loading your profile..." />;
   }
 

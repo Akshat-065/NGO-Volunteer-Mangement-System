@@ -7,6 +7,13 @@ export const useApiQuery = (fetcher, deps = [], options = {}) => {
   const [isLoading, setIsLoading] = useState(Boolean(enabled));
   const [error, setError] = useState("");
   const requestIdRef = useRef(0);
+  const onSuccessRef = useRef(onSuccess);
+
+  // Update the ref whenever onSuccess changes, so we always use the latest one
+  // without triggering a re-creation of the refetch callback.
+  useEffect(() => {
+    onSuccessRef.current = onSuccess;
+  }, [onSuccess]);
 
   const refetch = useCallback(async () => {
     if (!enabled) {
@@ -23,7 +30,7 @@ export const useApiQuery = (fetcher, deps = [], options = {}) => {
         return;
       }
       setData(response);
-      onSuccess?.(response);
+      onSuccessRef.current?.(response);
     } catch (requestError) {
       if (requestId !== requestIdRef.current) {
         return;
@@ -34,7 +41,7 @@ export const useApiQuery = (fetcher, deps = [], options = {}) => {
         setIsLoading(false);
       }
     }
-  }, [enabled, onSuccess, fetcher, ...deps]);
+  }, [enabled, fetcher, ...deps]);
 
   useEffect(() => {
     refetch();

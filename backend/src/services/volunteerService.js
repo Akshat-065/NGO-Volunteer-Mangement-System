@@ -35,6 +35,36 @@ export const listVolunteers = async (filters = {}) => {
   return volunteers.map(serializeVolunteer);
 };
 
+export const searchVolunteers = async (searchText = "") => {
+  const trimmed = searchText.trim();
+  if (!trimmed) {
+    return [];
+  }
+
+  const userIds = await userRepository.findUserIdsBySearch(trimmed);
+  const skillFilter = { skills: { $elemMatch: { $regex: trimmed, $options: "i" } } };
+
+  const [nameMatches, skillMatches] = await Promise.all([
+    userIds.length
+      ? volunteerRepository.findVolunteers({ userId: { $in: userIds } }, { populateUser: true })
+      : [],
+    volunteerRepository.findVolunteers(skillFilter, { populateUser: true })
+  ]);
+
+  // Deduplicate by volunteer _id, preferring name matches first
+  const seen = new Set();
+  const combined = [...nameMatches, ...skillMatches].filter((volunteer) => {
+    const id = String(volunteer._id);
+    if (seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  });
+
+  combined.sort((left, right) => new Date(right.createdAt) - new Date(left.createdAt));
+
+  return combined.map(serializeVolunteer);
+};
+
 export const createVolunteer = async (payload) => {
   const {
     name,
