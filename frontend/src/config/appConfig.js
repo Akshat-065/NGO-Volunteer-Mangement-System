@@ -1,9 +1,13 @@
 const getDefaultApiUrl = () => {
-  if (typeof window !== "undefined") {
-    return new URL("/api", window.location.origin).toString();
+  if (typeof window === "undefined") {
+    return "http://localhost:5000/api";
   }
 
-  return "http://localhost:5000/api";
+  if (import.meta.env.DEV) {
+    return "http://localhost:5000/api";
+  }
+
+  return "https://your-backend.onrender.com/api";
 };
 
 export const appConfig = {

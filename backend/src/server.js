@@ -25,9 +25,10 @@ await connectDB();
 const app = createApp();
 const httpServer = createServer(app);
 const io = initializeSocketServer(httpServer);
+const port = process.env.PORT || config.port;
 
 app.set("io", io);
 
-httpServer.listen(config.port, () => {
-  logger.info(`Server listening on port ${config.port}`);
+httpServer.listen(port, () => {
+  logger.info(`Server listening on port ${port}`);
 });
