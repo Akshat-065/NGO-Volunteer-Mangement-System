@@ -7,7 +7,7 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(1, "JWT_SECRET is required"),
   ACCESS_TOKEN_SECRET: z.string().optional(),
   REFRESH_TOKEN_SECRET: z.string().optional(),
-  FRONTEND_URL: z.string().min(1).default("http://localhost:5173"),
+  FRONTEND_URL: z.string().min(1).optional(),
   LOG_LEVEL: z.string().optional(),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(15 * 60 * 1000),
   RATE_LIMIT_MAX: z.coerce.number().int().positive().default(200),
@@ -51,7 +51,7 @@ export const getConfig = () => {
       parsed.data.ACCESS_TOKEN_SECRET || `${parsed.data.JWT_SECRET}_access`,
     refreshTokenSecret:
       parsed.data.REFRESH_TOKEN_SECRET || `${parsed.data.JWT_SECRET}_refresh`,
-    frontendUrl: parsed.data.FRONTEND_URL,
+    frontendUrl: parsed.data.FRONTEND_URL || process.env.RENDER_EXTERNAL_URL || "http://localhost:5173",
     logLevel: parsed.data.LOG_LEVEL || (isProduction ? "info" : "debug"),
     accessTokenTtlMinutes: parsed.data.ACCESS_TOKEN_TTL_MINUTES,
     refreshTokenTtlDays: parsed.data.REFRESH_TOKEN_TTL_DAYS,

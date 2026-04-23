@@ -126,6 +126,19 @@ Backend default URL: `http://localhost:5000`
 
 Frontend default URL: `http://localhost:5173`
 
+## Deploy on Render
+
+This repo is set up to deploy as one full-stack Render web service: the Express app serves the built React app in production, and API requests stay on the same origin.
+
+1. Create a new Render service from the repo root using `render.yaml`.
+2. Add the required secrets:
+   - `MONGO_URI`
+   - `JWT_SECRET`
+3. Render will build the frontend with `npm run build --prefix frontend` and start the backend with `npm start --prefix backend`.
+4. After deploy, open the Render URL. The React app and `/api` routes will both work from that same domain.
+
+If you prefer split hosting later, we can switch this to a separate frontend static site plus backend API deployment.
+
 ## API Routes
 
 - `POST /api/auth/register`
@@ -149,6 +162,7 @@ Frontend default URL: `http://localhost:5173`
 
 - The workspace did not include an actual Figma file or exported design assets, so the UI was implemented as a polished Figma-style dashboard system aligned with the requested layout and behavior.
 - Profile image upload is handled as a stored image data URL for local demo simplicity.
+- In production, the backend defaults `FRONTEND_URL` to `RENDER_EXTERNAL_URL`, so the same-origin Render deployment works without extra CORS wiring.
 
 ## Environment Config
 

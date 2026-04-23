@@ -2,7 +2,9 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { getConfig } from "./config/config.js";
 import {
   cookieParserLite
@@ -27,6 +29,10 @@ import { getLogger, morganStream } from "./utils/logger.js";
 export const createApp = () => {
   const config = getConfig();
   const logger = getLogger();
+  const currentFilePath = fileURLToPath(import.meta.url);
+  const currentDir = path.dirname(currentFilePath);
+  const frontendDistPath = path.resolve(currentDir, "../../frontend/dist");
+  const frontendIndexPath = path.join(frontendDistPath, "index.html");
 
   const app = express();
 
@@ -67,6 +73,14 @@ export const createApp = () => {
   app.use("/api/analytics", analyticsRoutes);
   app.use("/api/profile", profileRoutes);
   app.use("/api/dashboard", dashboardRoutes);
+
+  if (config.isProduction && fs.existsSync(frontendIndexPath)) {
+    app.use(express.static(frontendDistPath));
+
+    app.get(/^\/(?!api).*/, (_req, res) => {
+      res.sendFile(frontendIndexPath);
+    });
+  }
 
   app.use(notFound);
   app.use(errorHandler);
