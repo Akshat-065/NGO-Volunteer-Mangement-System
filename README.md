@@ -126,18 +126,28 @@ Backend default URL: `http://localhost:5000`
 
 Frontend default URL: `http://localhost:5173`
 
-## Deploy on Render
+## Deploy Frontend on Netlify
 
-This repo is set up to deploy as one full-stack Render web service: the Express app serves the built React app in production, and API requests stay on the same origin.
+The React frontend is ready for Netlify as a static site.
 
-1. Create a new Render service from the repo root using `render.yaml`.
+1. Create a new Netlify site from this repo.
+2. Let Netlify use the root `netlify.toml` in the repo.
+3. Add a site environment variable:
+   - `VITE_API_URL` = your deployed backend API URL, for example `https://your-backend.onrender.com/api`
+4. Deploy the site. Netlify will build `frontend/` and serve the SPA with client-side routing support.
+
+The frontend uses `VITE_API_URL` for API calls, so it must point at your backend deployment.
+
+## Deploy Backend
+
+Keep the Node API on Render or another Node host.
+
+1. Create a backend web service from the repo root using `render.yaml`.
 2. Add the required secrets:
    - `MONGO_URI`
    - `JWT_SECRET`
-3. Render will build the frontend with `npm run build --prefix frontend` and start the backend with `npm start --prefix backend`.
-4. After deploy, open the Render URL. The React app and `/api` routes will both work from that same domain.
-
-If you prefer split hosting later, we can switch this to a separate frontend static site plus backend API deployment.
+3. Set `FRONTEND_URL` on the backend host to your Netlify site URL, for example `https://your-site.netlify.app`.
+4. Deploy the backend, then update the Netlify `VITE_API_URL` value to point at that backend URL.
 
 ## API Routes
 
@@ -162,7 +172,7 @@ If you prefer split hosting later, we can switch this to a separate frontend sta
 
 - The workspace did not include an actual Figma file or exported design assets, so the UI was implemented as a polished Figma-style dashboard system aligned with the requested layout and behavior.
 - Profile image upload is handled as a stored image data URL for local demo simplicity.
-- In production, the backend defaults `FRONTEND_URL` to `RENDER_EXTERNAL_URL`, so the same-origin Render deployment works without extra CORS wiring.
+- In a split deployment, set backend `FRONTEND_URL` to the Netlify domain and set frontend `VITE_API_URL` to the backend domain.
 
 ## Environment Config
 
