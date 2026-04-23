@@ -147,6 +147,7 @@ Keep the Node API on Render or another Node host.
    - `MONGO_URI`
    - `JWT_SECRET`
 3. Set `FRONTEND_URL` on the backend host to your Netlify site URL, for example `https://your-site.netlify.app`.
+   - For this project, use `https://volunteeros.netlify.app`.
 4. Deploy the backend, then update the Netlify `VITE_API_URL` value to point at that backend URL.
 
 ## API Routes
@@ -172,7 +173,7 @@ Keep the Node API on Render or another Node host.
 
 - The workspace did not include an actual Figma file or exported design assets, so the UI was implemented as a polished Figma-style dashboard system aligned with the requested layout and behavior.
 - Profile image upload is handled as a stored image data URL for local demo simplicity.
-- In a split deployment, set backend `FRONTEND_URL` to the Netlify domain and set frontend `VITE_API_URL` to the backend domain.
+- In a split deployment, set backend `FRONTEND_URL` to `https://volunteeros.netlify.app` and set frontend `VITE_API_URL` to the backend domain.
 
 ## Environment Config
 
