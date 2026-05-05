@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, LockKeyhole, Mail } from "lucide-react";
+import { ArrowRight, LockKeyhole, LogIn, Mail } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import FormField from "../../components/forms/FormField";
 import Button from "../../components/ui/Button";
@@ -7,11 +7,17 @@ import Card from "../../components/ui/Card";
 import { useAuth } from "../../hooks/useAuth";
 import { resendVerification } from "../../services/authService";
 
+const DEMO_ADMIN_CREDENTIALS = {
+  email: "admin@ngo.org",
+  password: "Admin123"
+};
+
 const LoginPage = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDemoLoggingIn, setIsDemoLoggingIn] = useState(false);
   const [isResendingVerification, setIsResendingVerification] = useState(false);
   const [requiresVerification, setRequiresVerification] = useState(false);
   const { login } = useAuth();
@@ -65,6 +71,24 @@ const LoginPage = () => {
       );
     } finally {
       setIsResendingVerification(false);
+    }
+  };
+
+  const handleDemoAdminLogin = async () => {
+    setError("");
+    setNotice("");
+    setRequiresVerification(false);
+    setIsDemoLoggingIn(true);
+
+    try {
+      await login(DEMO_ADMIN_CREDENTIALS);
+      navigate("/dashboard", { replace: true });
+    } catch (requestError) {
+      setError(
+        requestError.response?.data?.message || "Unable to sign in with the demo admin account."
+      );
+    } finally {
+      setIsDemoLoggingIn(false);
     }
   };
 
@@ -129,7 +153,7 @@ const LoginPage = () => {
               </Button>
             ) : null}
 
-            <Button type="submit" className="w-full" isLoading={isSubmitting}>
+            <Button type="submit" className="w-full" isLoading={isSubmitting} disabled={isDemoLoggingIn}>
               Sign In
             </Button>
           </form>
@@ -140,23 +164,32 @@ const LoginPage = () => {
               Quick demo access
             </div>
             <div className="grid gap-3 md:grid-cols-2">
-              <button
+              <Button
                 type="button"
-                onClick={() => fillCredentials("admin@ngo.org", "Admin123!")}
-                className="rounded-2xl border border-white/70 bg-white p-4 text-left transition hover:-translate-y-0.5 hover:shadow-card"
+                variant="secondary"
+                className="w-full"
+                isLoading={isDemoLoggingIn}
+                disabled={isSubmitting}
+                onClick={handleDemoAdminLogin}
               >
-                <p className="text-sm font-bold text-ink">Admin account</p>
-                <p className="mt-2 text-sm text-slate">`admin@ngo.org` / `Admin123!`</p>
-              </button>
+                <span className="inline-flex items-center gap-2">
+                  <LogIn size={16} />
+                  Login as Demo Admin
+                </span>
+              </Button>
               <button
                 type="button"
                 onClick={() => fillCredentials("rohan@ngo.org", "Volunteer123!")}
-                className="rounded-2xl border border-white/70 bg-white p-4 text-left transition hover:-translate-y-0.5 hover:shadow-card"
+                disabled={isSubmitting || isDemoLoggingIn}
+                className="rounded-2xl border border-white/70 bg-white p-4 text-left transition hover:-translate-y-0.5 hover:shadow-card disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <p className="text-sm font-bold text-ink">Volunteer account</p>
                 <p className="mt-2 text-sm text-slate">`rohan@ngo.org` / `Volunteer123!`</p>
               </button>
             </div>
+            <p className="mt-3 text-sm text-slate">
+              Demo admin uses `admin@ngo.org` / `Admin123`.
+            </p>
           </div>
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 text-sm text-slate">

@@ -3,15 +3,21 @@ import * as userRepository from "../repositories/userRepository.js";
 import { verifyAccessToken } from "../utils/token.js";
 import { hasRequiredRole } from "../utils/roles.js";
 
-export const protect = async (req, _res, next) => {
-  const authHeader = req.headers.authorization;
+const getBearerToken = (authorizationHeader = "") => {
+  if (!authorizationHeader.startsWith("Bearer ")) {
+    return null;
+  }
 
-  if (!authHeader?.startsWith("Bearer ")) {
+  return authorizationHeader.slice("Bearer ".length).trim() || null;
+};
+
+export const protect = async (req, _res, next) => {
+  const token = getBearerToken(req.headers.authorization || "");
+  if (!token) {
     return next(new AppError("Not authorized, token missing", 401));
   }
 
   try {
-    const token = authHeader.split(" ")[1];
     const decoded = verifyAccessToken(token);
 
     if (decoded.type !== "access") {
@@ -47,3 +53,5 @@ export const authorize =
 
     next();
   };
+
+export const adminOnly = authorize("admin");

@@ -4,6 +4,7 @@ import Application from "./models/Application.js";
 import Event, { deriveEventStatus } from "./models/Event.js";
 import User from "./models/User.js";
 import Volunteer from "./models/Volunteer.js";
+import { ensureDemoAdminUser } from "./seeders/demoAdminSeeder.js";
 import { getLogger } from "./utils/logger.js";
 import { ROLES } from "./utils/roles.js";
 
@@ -20,20 +21,9 @@ const seedData = async () => {
     User.deleteMany()
   ]);
 
+  await ensureDemoAdminUser();
+
   await User.create([
-    {
-      name: "Aisha Rahman",
-      email: "admin@ngo.org",
-      password: "Admin123!",
-      role: ROLES.ADMIN,
-      isEmailVerified: true,
-      phone: "+91 98765 43210",
-      location: "Kolkata",
-      bio: "Operations lead coordinating volunteer programs across education and healthcare drives.",
-      interests: ["Community Outreach", "Impact Reporting"],
-      avatarUrl:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80"
-    },
     {
       name: "Sara Iqbal",
       email: "superadmin@ngo.org",
@@ -170,7 +160,7 @@ const seedData = async () => {
   ]);
 
   logger.info("Seed completed successfully");
-  logger.info("Admin login: admin@ngo.org / Admin123!");
+  logger.info("Demo admin login: admin@ngo.org / Admin123");
   logger.info("Super Admin login: superadmin@ngo.org / SuperAdmin123!");
   logger.info("Volunteer login: rohan@ngo.org / Volunteer123!");
 

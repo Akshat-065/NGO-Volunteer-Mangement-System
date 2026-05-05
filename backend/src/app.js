@@ -23,8 +23,37 @@ import authRoutes from "./routes/authRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import volunteerRoutes from "./routes/volunteerRoutes.js";
 import { getLogger, morganStream } from "./utils/logger.js";
+
+const isLocalDevelopmentOrigin = (origin, config) => {
+  try {
+    const parsedOrigin = new URL(origin);
+    return (
+      !config.isProduction &&
+      (parsedOrigin.hostname === "localhost" || parsedOrigin.hostname === "127.0.0.1")
+    );
+  } catch (_error) {
+    return false;
+  }
+};
+
+const isAllowedCorsOrigin = (origin, config) => {
+  if (!origin) {
+    return true;
+  }
+
+  try {
+    const parsedOrigin = new URL(origin).origin;
+    return (
+      config.allowedOrigins.includes(parsedOrigin) ||
+      isLocalDevelopmentOrigin(origin, config)
+    );
+  } catch (_error) {
+    return false;
+  }
+};
 
 export const createApp = () => {
   const config = getConfig();
@@ -40,8 +69,15 @@ export const createApp = () => {
 
   app.use(
     cors({
-      origin: config.frontendUrl,
-      credentials: true
+      origin: (origin, callback) => {
+        if (isAllowedCorsOrigin(origin, config)) {
+          return callback(null, true);
+        }
+
+        return callback(new Error("Not allowed by CORS"));
+      },
+      credentials: true,
+      optionsSuccessStatus: 204
     })
   );
   app.use(
@@ -59,6 +95,10 @@ export const createApp = () => {
   app.use(morgan(config.isProduction ? "combined" : "dev", { stream: morganStream }));
   app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
+  app.get("/api", (_req, res) => {
+    res.json({ message: "API is running" });
+  });
+
   app.get("/api/health", (_req, res) => {
     res.json({ status: "ok", message: "NGO Volunteer Management API is running" });
   });
@@ -69,6 +109,7 @@ export const createApp = () => {
 
   app.use("/api/volunteers", volunteerRoutes);
   app.use("/api/events", eventRoutes);
+  app.use("/api/users", userRoutes);
   app.use("/api", applicationRoutes);
   app.use("/api/analytics", analyticsRoutes);
   app.use("/api/profile", profileRoutes);

@@ -1,7 +1,7 @@
 import { createContext, useEffect, useMemo, useReducer } from "react";
 import * as authService from "../services/authService";
 import {
-  clearAccessToken,
+  clearAuthTokens,
   registerSessionExpiredHandler
 } from "../services/api";
 
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     let isMounted = true;
 
     const handleSessionExpired = () => {
-      clearAccessToken();
+      clearAuthTokens();
 
       if (isMounted) {
         dispatch({ type: "LOGOUT" });

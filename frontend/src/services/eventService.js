@@ -19,4 +19,3 @@ export const deleteEvent = async (id) => {
   const { data } = await api.delete(`/events/${id}`);
   return data;
 };
-

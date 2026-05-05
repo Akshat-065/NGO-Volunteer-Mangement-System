@@ -16,6 +16,7 @@ import { validate } from "../middleware/validate.js";
 import {
   forgotPasswordSchema,
   loginSchema,
+  refreshTokenSchema,
   registerSchema,
   resendVerificationSchema,
   resetPasswordSchema,
@@ -27,7 +28,7 @@ const router = express.Router();
 router.get("/csrf-token", getCsrfToken);
 router.post("/register", validate(registerSchema), register);
 router.post("/login", validate(loginSchema), login);
-router.post("/refresh", refresh);
+router.post("/refresh", validate(refreshTokenSchema), refresh);
 router.post("/logout", logout);
 router.get("/me", protect, me);
 router.post("/verify-email", validate(verifyEmailSchema), verifyEmail);

@@ -12,5 +12,7 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
+      - key: FRONTEND_URL
+        sync: false
       - key: LOG_LEVEL
         value: info

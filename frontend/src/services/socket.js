@@ -1,35 +1,13 @@
 import { io } from "socket.io-client";
 import { appConfig } from "../config/appConfig";
 
-const getSocketBaseUrl = () => {
-  try {
-    return new URL(appConfig.apiUrl).origin;
-  } catch (_error) {
-    return "http://localhost:5000";
-  }
-};
-
 let socket = null;
 
-const logSocketEvent = (label, payload) => {
-  if (appConfig.isDev) {
-    console.log(`[socket] ${label}`, payload);
-  }
-};
-
 const createSocket = () => {
-  const client = io(getSocketBaseUrl(), {
+  const client = io(appConfig.socketUrl, {
     autoConnect: false,
     withCredentials: true,
     transports: ["websocket"]
-  });
-
-  client.on("connect", () => {
-    logSocketEvent("connected", { socketId: client.id });
-  });
-
-  client.on("disconnect", (reason) => {
-    logSocketEvent("disconnected", { reason });
   });
 
   return client;

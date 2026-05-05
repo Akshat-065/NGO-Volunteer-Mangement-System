@@ -1,12 +1,10 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import { getConfig } from "../config/config.js";
-import {
-  clearRefreshTokenCookie,
-  setRefreshTokenCookie
-} from "../utils/cookies.js";
+import { clearRefreshTokenCookie, setRefreshTokenCookie } from "../utils/cookies.js";
 import * as authService from "../services/authService.js";
 
-const getRefreshTokenFromCookies = (req) => req.cookies?.[getConfig().refreshCookieName];
+const getRefreshTokenFromRequest = (req) =>
+  req.body?.refreshToken || req.cookies?.[getConfig().refreshCookieName];
 
 const getRequestMeta = (req) => ({
   userAgent: req.get("user-agent"),
@@ -27,24 +25,26 @@ export const login = asyncHandler(async (req, res) => {
   setRefreshTokenCookie(res, session.refreshToken);
   res.json({
     accessToken: session.accessToken,
+    refreshToken: session.refreshToken,
     user: session.user
   });
 });
 
 export const refresh = asyncHandler(async (req, res) => {
   const session = await authService.refreshSession(
-    getRefreshTokenFromCookies(req),
+    getRefreshTokenFromRequest(req),
     getRequestMeta(req)
   );
   setRefreshTokenCookie(res, session.refreshToken);
   res.json({
     accessToken: session.accessToken,
+    refreshToken: session.refreshToken,
     user: session.user
   });
 });
 
 export const logout = asyncHandler(async (req, res) => {
-  await authService.logout(getRefreshTokenFromCookies(req));
+  await authService.logout(getRefreshTokenFromRequest(req));
   clearRefreshTokenCookie(res);
   res.status(204).send();
 });

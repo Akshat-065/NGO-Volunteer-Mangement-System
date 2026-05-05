@@ -46,7 +46,17 @@ const sanitizeValue = (value, key = "") => {
   return value;
 };
 
-const getAllowedOrigin = () => new URL(getConfig().frontendUrl).origin;
+const isLocalDevelopmentOrigin = (origin) => {
+  try {
+    const parsedOrigin = new URL(origin);
+    return (
+      !getConfig().isProduction &&
+      (parsedOrigin.hostname === "localhost" || parsedOrigin.hostname === "127.0.0.1")
+    );
+  } catch (_error) {
+    return false;
+  }
+};
 
 export const sanitizeRequest = (req, _res, next) => {
   req.body = sanitizeValue(req.body);
@@ -66,7 +76,9 @@ export const enforceOriginPolicy = (req, _res, next) => {
   }
 
   try {
-    if (new URL(origin).origin !== getAllowedOrigin()) {
+    const parsedOrigin = new URL(origin).origin;
+    const { allowedOrigins } = getConfig();
+    if (!allowedOrigins.includes(parsedOrigin) && !isLocalDevelopmentOrigin(origin)) {
       return next(new AppError("Blocked by origin policy", 403));
     }
   } catch (_error) {

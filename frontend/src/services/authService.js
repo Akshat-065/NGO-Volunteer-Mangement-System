@@ -1,8 +1,10 @@
 import api, {
-  clearAccessToken,
+  clearAuthTokens,
   fetchCsrfToken,
+  getRefreshToken,
   refreshAccessSession,
-  setAccessToken
+  setAccessToken,
+  setRefreshToken
 } from "./api";
 
 export const initializeSecurity = async () => {
@@ -14,6 +16,7 @@ export const restoreSession = async () => refreshAccessSession();
 export const login = async (credentials) => {
   const { data } = await api.post("/auth/login", credentials);
   setAccessToken(data.accessToken);
+  setRefreshToken(data.refreshToken);
   return data;
 };
 
@@ -23,12 +26,14 @@ export const register = async (payload) => {
 };
 
 export const logout = async () => {
+  const refreshToken = getRefreshToken();
+
   try {
-    await api.post("/auth/logout");
+    await api.post("/auth/logout", { refreshToken });
   } catch (_error) {
-    // Clear the local session even if the server-side refresh cookie is already gone.
+    // Clear the local session even if the server-side refresh token is already gone.
   } finally {
-    clearAccessToken();
+    clearAuthTokens();
   }
 };
 

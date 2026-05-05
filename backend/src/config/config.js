@@ -8,6 +8,7 @@ const envSchema = z.object({
   ACCESS_TOKEN_SECRET: z.string().optional(),
   REFRESH_TOKEN_SECRET: z.string().optional(),
   FRONTEND_URL: z.string().min(1).optional(),
+  CORS_ORIGINS: z.string().optional(),
   LOG_LEVEL: z.string().optional(),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(15 * 60 * 1000),
   RATE_LIMIT_MAX: z.coerce.number().int().positive().default(200),
@@ -28,6 +29,13 @@ const formatZodIssues = (issues) =>
 
 let cachedConfig = null;
 
+const parseOrigins = (value = "") =>
+  value
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean)
+    .map((origin) => new URL(origin).origin);
+
 export const getConfig = () => {
   if (cachedConfig) {
     return cachedConfig;
@@ -40,6 +48,12 @@ export const getConfig = () => {
 
   const env = parsed.data.NODE_ENV;
   const isProduction = env === "production";
+  const frontendOrigins = parseOrigins(parsed.data.FRONTEND_URL || "");
+  const allowedOrigins = parseOrigins(parsed.data.CORS_ORIGINS || parsed.data.FRONTEND_URL || "");
+
+  if (!allowedOrigins.length) {
+    throw new Error("FRONTEND_URL or CORS_ORIGINS is required");
+  }
 
   cachedConfig = {
     env,
@@ -51,7 +65,8 @@ export const getConfig = () => {
       parsed.data.ACCESS_TOKEN_SECRET || `${parsed.data.JWT_SECRET}_access`,
     refreshTokenSecret:
       parsed.data.REFRESH_TOKEN_SECRET || `${parsed.data.JWT_SECRET}_refresh`,
-    frontendUrl: parsed.data.FRONTEND_URL || process.env.RENDER_EXTERNAL_URL || "http://localhost:5173",
+    frontendUrl: frontendOrigins[0] || allowedOrigins[0],
+    allowedOrigins,
     logLevel: parsed.data.LOG_LEVEL || (isProduction ? "info" : "debug"),
     accessTokenTtlMinutes: parsed.data.ACCESS_TOKEN_TTL_MINUTES,
     refreshTokenTtlDays: parsed.data.REFRESH_TOKEN_TTL_DAYS,
